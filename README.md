@@ -21,7 +21,7 @@ MerakiNetOps is a Python script designed to automate configuration tasks for Mer
 
 1. Clone this repository to your local machine:
     ```
-    git clone https://github.com/yourusername/MerakiNetOps.git
+    git clone https://github.com/Ahsxka/MerakiNetOps.git
     ```
 
 2. Navigate to the project directory:
