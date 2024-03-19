@@ -1,3 +1,6 @@
+![Ahsxka-MerakiNetOps (1)](https://github.com/Ahsxka/MerakiNetOps/assets/162576190/5e484bdd-4f9d-4275-9197-abdbf0fc9fbe)
+
+
 # MerakiNetOps
 
 MerakiNetOps is a Python script designed to automate configuration tasks for Meraki devices. It offers functionalities to configure RADIUS, Syslog, and claim devices into networks.
