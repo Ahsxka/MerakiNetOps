@@ -69,6 +69,6 @@ MerakiNetOps/
 
 ## About
 
-I'm planning to continue updating and improving this script during my internship at <a href="https://www.ikusi.com/es/" target="_blank">Ikusi</a>. If you have any question or ideas, feel free to send me an email at apichot.it@gmail.com
+I'm planning to continue updating and improving this script during my internship at <a href="https://www.ikusi.com/es/" target="_blank">Ikusi</a>. If you have any question or ideas, feel free to email me at apichot.it@gmail.com
 
 ![cabecera_comunicados_2](https://github.com/Ahsxka/python-automation/assets/162576190/af0864ed-84e4-453d-8948-bb23d131e54b)
