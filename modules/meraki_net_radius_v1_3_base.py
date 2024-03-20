@@ -3,7 +3,7 @@ import meraki
 import csv
 
 from modules.utils.colors import color_format
-from modules.utils.base import choose_file, get_network_id, get_organization_id
+from modules.utils.base import choose_file, get_network_id, get_organization_id, get_encoding
 try:
     from key import API_KEY
 except:
@@ -14,7 +14,9 @@ except:
 
 def get_valid_data(file_path):
     valid_data = []
-    with open(file_path, newline='', encoding='utf-8') as csvfile:
+    encoding = get_encoding(file_path)
+
+    with open(file_path, newline='', encoding=encoding) as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
             data_entry = {

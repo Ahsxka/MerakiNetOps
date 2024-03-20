@@ -1,4 +1,5 @@
 import sys
+import csv
 import tkinter as tk
 from tkinter import filedialog
 from modules.utils.colors import color_format
@@ -30,7 +31,7 @@ def get_organization_id(session, org_name):
             return organization_id
     else:
         color_format.print_error(f"Organization '{org_name}' not found, please provide a valid organisation.\n"
-                                        f"{10 * ' '}Aborting session...")
+                                 f"{10 * ' '}Aborting session...")
         sys.exit()
 
 
@@ -60,3 +61,16 @@ def menu_builder(menu_title="Menu", options=['Option 1', 'Option 2']):
 def get_option(choices, options):  # Function used by menu_builder
     option_dict = {str(index): option for index, option in enumerate(options, start=1)}
     return [option_dict[choice] for choice in choices if choice in option_dict]
+
+
+def get_encoding(file_path):
+    encodings_to_try = ['utf-8', 'latin-1', 'ISO-8859-1', 'windows-1252', 'UTF-16', 'cp1252', 'ascii', 'mac_roman']
+    for encoding in encodings_to_try:
+        try:
+            with open(file_path, newline='', encoding=encoding) as csvfile:
+                csv.DictReader(csvfile)
+            return encoding
+        except (UnicodeDecodeError, UnicodeError):
+            continue
+
+    return None
