@@ -48,8 +48,10 @@ def get_policy_number(session, network_id, policy_name):
 def main():
     color_format.print_info("Please read the above documentation before using this program.")
     session = meraki.DashboardAPI(API_KEY, output_log=False, suppress_logging=True)
+
     color_format.prsep()
     org_name = input("Enter the *exact* organization name : ")
+    organization_id = get_organization_id(session, org_name)
     policy_name = input("Enter policy name to modify : ")
     if not policy_name:
         policy_name = "Access policy #1"
@@ -61,8 +63,6 @@ def main():
     verbose = str(input("Verbose mode [y/N] : ")).lower()
     if not verbose:
         verbose = 'n'
-    organization_id = get_organization_id(session, org_name)
-    var = (organization_id)
     color_format.prsep()
     color_format.print_info("Current settings :")
     print("Verbose mode : on" if verbose == "y" else "Verbose mode : off")

@@ -32,9 +32,10 @@ def get_valid_data(file_path):
 
 def main():
     color_format.print_info("Please read the above documentation before using this program.")
-    org_name = input("Enter the *exact* organization name : ")
     session = meraki.DashboardAPI(API_KEY, output_log=False, suppress_logging=True)
 
+    color_format.prsep()
+    org_name = input("Enter the *exact* organization name : ")
     organization_id = get_organization_id(session, org_name)
     print("Please choose your network files, one network per line : ")
     valid_data = get_valid_data(choose_file())

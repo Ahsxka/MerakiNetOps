@@ -24,6 +24,10 @@ def get_network_id(session, org_id, network_name):
 
 
 def get_organization_id(session, org_name):
+    if len(org_name) == 0:
+        color_format.print_error(f"Please provide a valid organisation.\n"
+                                 f"{10 * ' '}Aborting session...")
+        sys.exit()
     organizations = session.organizations.getOrganizations()
     for organization in organizations:
         if organization['name'] == org_name:

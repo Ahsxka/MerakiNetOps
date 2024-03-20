@@ -80,7 +80,9 @@ def change_device_name(session, serial, name):
 
 def main():
     color_format.print_info("Please read the above documentation before using this program.")
-    session = meraki.DashboardAPI(API_KEY, output_log=False, suppress_logging=False)
+    session = meraki.DashboardAPI(API_KEY, output_log=False, suppress_logging=True)
+
+    color_format.prsep()
     print("Please choose a valid config files, one device per line : ")
     valid_orgs_networks_and_equipments = get_valid_data(choose_file())
     for org_name, data in valid_orgs_networks_and_equipments.items():
