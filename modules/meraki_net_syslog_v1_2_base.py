@@ -96,6 +96,5 @@ def main():
             color_format.print_error(f"Failed to configure network '{network_name}' :\n{10 * ' '}|__ {error}")
 
 
-
 if __name__ == "__main__":
     main()

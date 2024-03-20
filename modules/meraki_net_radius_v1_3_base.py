@@ -138,13 +138,13 @@ def main():
                     print(f"{4 * ' '}Accounting server(s) :")
                     for i in e['AccountingServers']:
                         print(f"{8 * ' '}host : {i['host']}   port : {i['port']}")
-                    print(f"{80 * "-"}")
+                    color_format.prsep()
             except meraki.APIError as error:
                 color_format.print_error(f"Failed to configure device {e['Name']} with error {error}")
 
     else:
         color_format.print_warning("Aborting session...")
-        print(f"{80 * "-"}")
+        color_format.prsep()
 
 
 if __name__ == "__main__":
