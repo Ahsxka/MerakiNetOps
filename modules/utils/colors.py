@@ -25,4 +25,4 @@ class color_format:
 
     @staticmethod
     def prsep(end='\n'):
-        print(f"{80 * "-"}", end=end)
+        print(f"{80 * '-'}", end=end)
