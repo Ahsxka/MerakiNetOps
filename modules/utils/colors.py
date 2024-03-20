@@ -26,3 +26,5 @@ class color_format:
     @staticmethod
     def prsep(end='\n'):
         print(f"{80 * '-'}", end=end)
+
+# test GitHub push
