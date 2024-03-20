@@ -74,3 +74,10 @@ def get_encoding(file_path):
             continue
 
     return None
+
+
+def printfile(filepath):
+    with open(filepath, "r") as f:
+        for l in f:
+            print(l, end='')
+        print('\n')

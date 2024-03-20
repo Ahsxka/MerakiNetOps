@@ -46,30 +46,6 @@ def get_policy_number(session, network_id, policy_name):
 
 
 def main():
-    print("""
-    File Format:
-    The script expects a CSV (or .txt) file separated with commas with the following format:
-
-    - Each row represents a device configuration.
-    - The CSV file should contain the following columns:
-        - 'Name': Name of the device.
-        - 'Network': Name of the network the device should be configured in.
-        - 'RADIUS 1': Hostname or IP address of the primary RADIUS server.
-        - 'RADIUS 2': Hostname or IP address of the secondary RADIUS server.
-        - 'PORT': Port number for RADIUS servers.
-        - 'ACCOUNTING 1': Hostname or IP address of the primary accounting server.
-        - 'ACCOUNTING 2': Hostname or IP address of the secondary accounting server.
-        - 'PORT3': Port number for accounting servers.
-        - 'PORT4': Port number for accounting servers.
-
-    Example file:
-    Name,Network,RADIUS 1,RADIUS 2,PORT,ACCOUNTING 1,ACCOUNTING 2,PORT3,PORT4
-    Device1,Network1,192.168.1.100,192.168.1.101,1812,192.168.2.100,192.168.2.101,1813,1813
-    Device2,Network2,10.0.0.100,10.0.0.101,1812,10.0.1.100,10.0.1.101,1813,1813
-    Device3,Network3,172.16.0.100,172.16.0.101,1812,172.16.1.100,172.16.1.101,1813,1813
-
-    Please ensure the CSV file adheres to this format for the script to function correctly.
-    """)
     color_format.print_info("Please read the above documentation before using this program.")
     session = meraki.DashboardAPI(API_KEY, output_log=False, suppress_logging=True)
     color_format.prsep()

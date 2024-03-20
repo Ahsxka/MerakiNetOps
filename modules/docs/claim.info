@@ -1,0 +1,17 @@
+    File Format:
+    The script expects a CSV (or .txt) file separated with comma with the following format:
+
+    - Each row represents a device.
+    - The CSV file should contain the following columns:
+        - 'Organization': Name of the organization the device belongs to.
+        - 'Network': Name of the network the device should be added to.
+        - 'Serial': Serial number of the device.
+        - 'Name': Desired name for the device.
+
+    Example file:
+    Organization,Network,Serial,Name
+    Org1,Net1,XXXX-XXXX-XXXX,Device1
+    Org1,Net2,YYYY-YYYY-YYYY,Device2
+    Org2,Net3,ZZZZ-ZZZZ-ZZZZ,Device3
+
+    Please ensure the CSV file adheres to this format for the script to function correctly.

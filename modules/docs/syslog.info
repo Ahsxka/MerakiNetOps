@@ -1,0 +1,13 @@
+    File Format:
+    The script expects a CSV (or .txt) file with a list of network names. The first line of the file should contain the header "Network", followed by each network name on a separate line.
+
+    - The first line represents the header.
+    - Each subsequent line represents a network name.
+
+    Example file:
+    Network             ### <-- This header is important
+    Network1
+    Network2
+    Network3
+
+    Please ensure the file contains the header "Network" in the first line, followed by the names of the networks to which you want to apply syslog configuration, with each network name on a separate line.

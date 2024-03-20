@@ -31,22 +31,6 @@ def get_valid_data(file_path):
 
 
 def main():
-    print("""
-    File Format:
-    The script expects a CSV (or .txt) file with a list of network names. The first line of the file should contain the header "Network", followed by each network name on a separate line.
-
-    - The first line represents the header.
-    - Each subsequent line represents a network name.
-
-    Example file:
-    Network
-    Network1
-    Network2
-    Network3
-
-    Please ensure the file contains the header "Network" in the first line, followed by the names of the networks to which you want to apply syslog configuration, with each network name on a separate line.
-    """)
-
     color_format.print_info("Please read the above documentation before using this program.")
     org_name = input("Enter the *exact* organization name : ")
     session = meraki.DashboardAPI(API_KEY, output_log=False, suppress_logging=True)
