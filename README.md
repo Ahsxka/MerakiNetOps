@@ -33,6 +33,10 @@ MerakiNetOps is a Python script designed to automate configuration tasks for Mer
     ```
     pip install -r requirements.txt
     ```
+4. Create a key.py file, containing your key, following this syntax:
+    ```
+    API_KEY='PASTE YOUR API KEY HERE'
+    ```
 
 ## Usage
 
