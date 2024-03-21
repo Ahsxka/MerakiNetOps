@@ -1,0 +1,15 @@
+    File Format:
+    The script expects a CSV (or .txt) file separated with comma with the following format:
+
+    - Each row represents a device.
+    - The CSV file should at least contain the following column:
+        - 'Name': Name of the device.
+
+
+    Example file:
+    Name
+    My-Meraki-MR
+    My-Meraki-MX
+    My-Meraki-MS
+
+    Please ensure the CSV file adheres to this format for the script to function correctly.

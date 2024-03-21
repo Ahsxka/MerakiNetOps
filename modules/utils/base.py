@@ -39,6 +39,18 @@ def get_organization_id(session, org_name):
         sys.exit()
 
 
+def get_devices_serial(session, devices_list, organization_id):
+    devices = session.organizations.getOrganizationDevices(
+        organization_id, total_pages='all'
+    )
+    device_serial_list = []
+    for device in devices:
+        if device['name'] in devices_list:
+            device_info = {'name': device['name'], 'serial': device['serial']}
+            device_serial_list.append(device_info)
+    return device_serial_list
+
+
 def menu_builder(menu_title="Menu", options=['Option 1', 'Option 2']):
     selected_options = []
     while True:
@@ -68,16 +80,17 @@ def get_option(choices, options):  # Function used by menu_builder
 
 
 def get_encoding(file_path):
-    encodings_to_try = ['utf-8', 'latin-1', 'ISO-8859-1', 'windows-1252', 'UTF-16', 'cp1252', 'ascii', 'mac_roman']
+    encodings_to_try = ['utf-8', 'windows-1252', 'latin-1', 'ISO-8859-1', 'UTF-16', 'cp1252', 'ascii', 'mac_roman']
     for encoding in encodings_to_try:
         try:
             with open(file_path, newline='', encoding=encoding) as csvfile:
                 csv.DictReader(csvfile)
+                for row in csvfile:  # Very important to keep this line for the test to occur
+                    pass
+            color_format.print_success(f"Opening '{file_path}' with encoding '{encoding}'.")
             return encoding
         except (UnicodeDecodeError, UnicodeError):
-            continue
-
-    return None
+            color_format.print_warning(f"Failed to open '{file_path}' with encoding '{encoding}'.")
 
 
 def printfile(filepath):

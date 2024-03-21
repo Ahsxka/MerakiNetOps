@@ -15,6 +15,7 @@ except:
 def get_valid_data(file_path):
     valid_data = []
     encoding = get_encoding(file_path)
+    print(encoding)
 
     with open(file_path, newline='', encoding=encoding) as csvfile:
         reader = csv.DictReader(csvfile)
