@@ -54,13 +54,13 @@ Follow the prompts to select the desired operation and provide necessary inputs.
 MerakiNetOps/
 │
 ├── modules/
-│ ├── meraki_net_claim_v1_1_base.py
-│ ├── meraki_net_radius_v1_3_base.py
-│ └── meraki_net_syslog_v1_2_base.py
-│ └── utils/
-│ ├── init.py
-│ ├── colors.py
-│ └── base.py
+│    ├── meraki_net_claim_v1_1_base.py
+│    ├── meraki_net_radius_v1_3_base.py
+│    ├── meraki_net_syslog_v1_2_base.py
+│    ├── meraki_net_ping.py
+│    └── utils/
+│         ├── colors.py
+│         └── base.py
 │
 ├── MerakiNetOps.py
 └── README.md
@@ -73,6 +73,7 @@ MerakiNetOps/
 - **meraki_net_claim_v1_1_base.py**: Module for claiming devices into networks.
 - **meraki_net_radius_v1_3_base.py**: Module for configuring RADIUS servers.
 - **meraki_net_syslog_v1_2_base.py**: Module for configuring Syslog servers.
+- **meraki_net_ping.py** : Module to run connectivity tests for a wide range of devices within an organization.
 
 ## About
 
