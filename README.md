@@ -58,6 +58,12 @@ MerakiNetOps/
 │    ├── meraki_net_radius_v1_3_base.py
 │    ├── meraki_net_syslog_v1_2_base.py
 │    ├── meraki_net_ping.py
+|    ├── docs/
+|    |    ├── claim.info
+|    |    ├── ping.info
+|    |    ├── radius.info
+|    |    └── syslog.info
+|    |
 │    └── utils/
 │         ├── colors.py
 │         └── base.py
