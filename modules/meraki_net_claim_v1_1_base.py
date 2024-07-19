@@ -4,12 +4,7 @@ import csv
 
 from modules.utils.colors import color_format
 from modules.utils.base import choose_file, get_network_id, get_encoding
-try:
-    from key import API_KEY
-except:
-    color_format.print_error("No API KEY FOUND. Please provide a 'key.py' file with a correct API_KEY value."
-                             "\nAborting session...")
-    sys.exit()
+
 
 
 def get_valid_data(file_path):
@@ -17,9 +12,12 @@ def get_valid_data(file_path):
     encoding = get_encoding(file_path)
 
     with open(file_path, newline='', encoding=encoding) as csvfile:
-        reader = csv.DictReader(csvfile)
+        reader = csv.DictReader(csvfile, delimiter=";")
         for row in reader:
-            org_name = row['Organization']
+            try:
+                org_name = row['Organization']
+            except:
+                pass
             network_name = row['Network']
             serial = row['Serial']
             name = row['Name']
@@ -50,6 +48,12 @@ def claim_devices(session, org_name, serials):
         print(f"Unable to find organization '{org_name}'.")
 
 
+def chunk_list(lst, chunk_size):
+    """Divise une liste en blocs de taille chunk_size."""
+    for i in range(0, len(lst), chunk_size):
+        yield lst[i:i + chunk_size]
+
+
 def add_devices_to_networks(session, org_name, networks_and_serials):
     organizations = session.organizations.getOrganizations()
     org_id = None
@@ -57,17 +61,21 @@ def add_devices_to_networks(session, org_name, networks_and_serials):
         if org['name'] == org_name:
             org_id = org['id']
             break
+
+
+
     if org_id:
         for network_name, serials in networks_and_serials.items():
             network_id = get_network_id(session, org_id, network_name)
             if network_id:
                 try:
-                    session.networks.claimNetworkDevices(network_id, serials)
-                    print(
-                        f"Devices added to network '{network_name}' in organization '{org_name}' with Serials {serials}")
+                    for serial_chunk in chunk_list(serials, 40):
+                        session.networks.claimNetworkDevices(network_id, serial_chunk)
+                        print(
+                            f"Devices added to network '{network_name}' in organization '{org_name}' with Serials {serial_chunk}")
                 except meraki.APIError as e:
                     print(
-                        f"Failed to add devices to network '{network_name}' in organization '{org_name}' with Serials {serials}: {e}")
+                        f"Failed to add devices to network '{network_name}' in organization '{org_name}' with Serials {serial_chunk}: {e}")
             else:
                 print(f"Network '{network_name}' not found in organization '{org_name}'.")
     else:
@@ -78,7 +86,7 @@ def change_device_name(session, serial, name):
     session.devices.updateDevice(serial, name=name)
 
 
-def main():
+def main(API_KEY):
     color_format.print_info("Please read the above documentation before using this program.")
     session = meraki.DashboardAPI(API_KEY, output_log=False, suppress_logging=True)
 
@@ -98,4 +106,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    main(API_KEY)

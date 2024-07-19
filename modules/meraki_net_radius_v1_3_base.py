@@ -4,12 +4,6 @@ import csv
 
 from modules.utils.colors import color_format
 from modules.utils.base import choose_file, get_network_id, get_organization_id, get_encoding
-try:
-    from key import API_KEY
-except:
-    color_format.print_error("No API KEY FOUND. Please provide a 'key.py' file with a correct API_KEY value."
-                             "\nAborting session...")
-    sys.exit()
 
 
 def get_valid_data(file_path):
@@ -46,7 +40,7 @@ def get_policy_number(session, network_id, policy_name):
             return policy_number
 
 
-def main():
+def main(API_KEY):
     color_format.print_info("Please read the above documentation before using this program.")
     session = meraki.DashboardAPI(API_KEY, output_log=False, suppress_logging=True)
 

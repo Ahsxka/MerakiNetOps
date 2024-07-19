@@ -2,7 +2,6 @@ import csv
 import time
 
 import meraki
-from key import API_KEY
 from modules.utils.base import get_organization_id, get_devices_serial, choose_file, get_encoding
 from modules.utils.colors import color_format, colors
 
@@ -36,10 +35,24 @@ def send_pings(session, targets, serial_list):
     for serial in serial_list:
         serial['ping_ids'] = []
         for i, target in enumerate(targets, start=1):
-            response = session.devices.createDeviceLiveToolsPing(
-                serial['serial'], target,
-                count=5,
-            )
+            while True:
+                try:
+                    response = session.devices.createDeviceLiveToolsPing(
+                        serial['serial'], target,
+                        count=5,
+                    )
+
+                except meraki.APIError as e:
+                    if e.status == 429:
+                        retry_after = int(
+                            e.response.headers.get("Retry-After", 1))  # Temps d'attente avant de réessayer
+                        print(f"Rate limit exceeded. Retrying after {retry_after} seconds.")
+                        time.sleep(retry_after)
+                    else:
+                        print(f"Failed with status code {e.status}.")
+                        break
+                else:
+                    break
             ping_id = response['pingId']
             serial['ping_ids'].append(ping_id)
             print(f"Sending ping requests from host '{serial['name']}' to '{target}'")
@@ -62,10 +75,24 @@ def print_ping_statistics(session, serial_list):
         for i, ping_id in enumerate(serial['ping_ids'], start=1):
             status = 'running'
             while status in ['new', 'running', 'ready']:
-                time.sleep(0.5)
-                response = session.devices.getDeviceLiveToolsPing(
-                    serial['serial'], ping_id
-                )
+                #time.sleep(0.5)
+                while True:
+                    try:
+                        response = session.devices.getDeviceLiveToolsPing(
+                            serial['serial'], ping_id
+                        )
+                    except meraki.APIError as e:
+                        if e.status == 429:
+                            retry_after = int(
+                                e.response.headers.get("Retry-After", 1))  # Temps d'attente avant de réessayer
+                            print(f"Rate limit exceeded. Retrying after {retry_after} seconds.")
+                            time.sleep(retry_after)
+                        else:
+                            print(f"Failed with status code {e.status}.")
+                            break
+                    else:
+                        break
+
                 status = response['status']
                 if status == "new":
                     print(".", end="")
@@ -115,10 +142,8 @@ def print_ping_statistics(session, serial_list):
             print(f"- {error_device_name} ({serial})")
 
 
-def main():
+def main(API_KEY):
     color_format.print_info("Please read the above documentation before using this program.")
-    session = meraki.DashboardAPI(API_KEY, output_log=False, suppress_logging=True)
-
     session = meraki.DashboardAPI(API_KEY, suppress_logging=True, output_log=False)
     color_format.prsep()
     org_name = input("Enter Organization name : ")
@@ -129,14 +154,15 @@ def main():
     print('Please choose a device file, on device per line : ')
     device_names = get_valid_device_names(choose_file())
     serial_list = get_devices_serial(session, device_names, organization_id)
-    color_format.prsep()
-    targets = input("Please enter the targets IP or FQDN for the ping requests, separated by commas : ").split(",")
-    send_pings(session, targets, serial_list)
-    color_format.prsep()
+    while True:
+        color_format.prsep()
+        targets = input("Please enter the targets IP or FQDN for the ping requests, separated by commas : ").split(",")
+        send_pings(session, targets, serial_list)
+        color_format.prsep()
     # Uncomment the line below if you want to wait for the pings to complete before printing statistics
     # time.sleep(5)
 
-    print_ping_statistics(session, serial_list)
+        print_ping_statistics(session, serial_list)
 
 
 if __name__ == "__main__":

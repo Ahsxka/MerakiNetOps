@@ -58,7 +58,7 @@ def menu_builder(menu_title="Menu", options=['Option 1', 'Option 2']):
         print(menu_title)
         for index, option in enumerate(options, start=1):
             print(f"{index}. {option}")
-        choices = input("Enter the numbers of the roles separated by commas: ")
+        choices = input("Enter the number(s) of the option(s): ")
         selected_options = get_option(choices.split(','), options)
         if selected_options:
             invalid_choices = [choice for choice in choices.split(',') if
